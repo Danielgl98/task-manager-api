@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.daniel.taskmanagerapi.model.Task;
 
+@Service
 public class TaskService {
 
 	private final Map<Long, Task> tasks = new HashMap<>();
