@@ -34,7 +34,7 @@ public class TaskController {
 	public TaskResponse saveTask(@Valid @RequestBody TaskRequest taskRequest) {
 		Task t = taskService.saveTask(taskRequest.getTitle(), taskRequest.getContent());
 		
-		return new TaskResponse(t.getId(), t.getTitle(), t.getContent(), t.isCompleted());
+		return toResponse(t);
 	}
 	
 	@GetMapping
@@ -43,7 +43,7 @@ public class TaskController {
 		List<TaskResponse> tasksResponse = new ArrayList<>();
 		
 		for(Task t: tasks) {
-			tasksResponse.add(new TaskResponse(t.getId(), t.getTitle(), t.getContent(), t.isCompleted()));
+			tasksResponse.add(toResponse(t));
 		}
 		
 		return tasksResponse;
@@ -53,20 +53,26 @@ public class TaskController {
 	public TaskResponse getById(@PathVariable Long id) {
 		Task t = taskService.getById(id);
 		
-		return new TaskResponse(t.getId(), t.getTitle(), t.getContent(), t.isCompleted());
+		return toResponse(t);
 	}
 	
 	@PutMapping("/{id}/complete")
 	public TaskResponse completeTask(@PathVariable Long id) {
 		Task t = taskService.completeTask(id);
 		
-		return new TaskResponse(t.getId(), t.getTitle(), t.getContent(), t.isCompleted());
+		return toResponse(t);
 	}
 	
-	@DeleteMapping("{id}")
+	@DeleteMapping("/{id}")
 	public TaskResponse deleteTask(@PathVariable Long id) {
 		Task t = taskService.deleteTask(id);
 		
-		return new TaskResponse(t.getId(), t.getTitle(), t.getContent(), t.isCompleted());
+		return toResponse(t);
+	}
+	
+	
+	//convert Task to TaskResponse
+	private TaskResponse toResponse(Task task) {
+		return new TaskResponse(task.getId(), task.getTitle(), task.getContent(), task.isCompleted());
 	}
 }

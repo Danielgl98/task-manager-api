@@ -26,6 +26,8 @@ public class TaskService {
 	}
 	
 	public Task getById(Long id) {
+		validateId(id);
+		
 		Task t = tasks.get(id);
 		
 		if(t == null) {
@@ -46,14 +48,14 @@ public class TaskService {
 		Task t = tasks.remove(id);
 		
 		if(t == null) {
-			throw new IllegalArgumentException("The task was't found");
+			throw new IllegalArgumentException("The task wasn't found");
 		}
 		
 		return t;
 	}
 	
 	//Validates
-	public void validateId(Long id) {
+	private void validateId(Long id) {
 		if(id == null || id <= 0) {
 			throw new IllegalArgumentException("Invalid ID");
 		}
