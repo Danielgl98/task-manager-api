@@ -63,6 +63,13 @@ public class TaskController {
 		return toResponse(t);
 	}
 	
+	@PutMapping("/{id}")
+	public TaskResponse updateTask(@PathVariable Long id, @Valid @RequestBody TaskRequest taskRequest) {
+		Task t = taskService.updateTask(id, taskRequest.getTitle(), taskRequest.getContent());
+		
+		return toResponse(t);
+	}
+	
 	@DeleteMapping("/{id}")
 	public TaskResponse deleteTask(@PathVariable Long id) {
 		Task t = taskService.deleteTask(id);

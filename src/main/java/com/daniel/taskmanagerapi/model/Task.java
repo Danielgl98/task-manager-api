@@ -1,16 +1,21 @@
 package com.daniel.taskmanagerapi.model;
+import jakarta.persistence.*;
 
+@Entity
 public class Task {
 
-	private final Long id;
-	private final String title;
-	private final String content;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String title;
+	private String content;
 	private boolean completed;
 	
-	private static Long nextId=1L;
+	
+	public Task() {
+	}
 	
 	public Task(String title, String content) {
-		id = nextId;
 		
 		if(title == null || title.isBlank()) {
 			throw new IllegalArgumentException("Title is required");
@@ -24,7 +29,6 @@ public class Task {
 		this.content = content;
 		completed = false;
 		
-		nextId++;
 	}
 
 	public boolean isCompleted() {
@@ -38,6 +42,20 @@ public class Task {
 		
 		completed = true;
 	}
+	
+	public void updateTask(String title, String content) {
+		if(title == null || title.isBlank()) {
+			throw new IllegalArgumentException("Title is required");
+		}
+		
+		if(content == null || content.isBlank()) {
+			throw new IllegalArgumentException("Content is required");
+		}
+		
+		this.title = title;
+		this.content = content;
+	}
+	
 
 	public Long getId() {
 		return id;
